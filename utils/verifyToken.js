@@ -11,6 +11,7 @@ const verifyToken = (req, res, next) => {
     }
     try{
         let verified = jwt.verify(headerToken, process.env.TOKEN_KEY)
+        console.log(verified, 'verified')
         // req.body = verified
         next()
 

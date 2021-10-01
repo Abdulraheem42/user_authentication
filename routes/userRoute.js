@@ -175,6 +175,7 @@ router.post('/resetPassword', async (req, res) => {
   }
 })
 
+// ==================checking user verify by token=================
 router.get("/getResetPasswordToken/:token", async (req, res) => {
   try{
     let user = await userControllers.getForgetPasswordToken(req.params.token)
@@ -237,5 +238,6 @@ router.post("/changePassword/:token", async (req, res) => {
       return error
     }
   })
+
 
 module.exports = router

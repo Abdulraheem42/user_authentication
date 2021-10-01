@@ -45,6 +45,9 @@ const userSchema = new mongoose.Schema({
     forgetPasswordTime: {
         type: Number,
     },
+    userId: {
+        type: String
+    }
 })
 
 const UserModel = mongoose.model("user", userSchema);
