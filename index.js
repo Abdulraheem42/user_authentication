@@ -5,6 +5,7 @@ const dotenv = require('dotenv')
 const userRouter = require('./routes/userRoute')
 const amountRouter = require('./routes/amountRoute')
 const categoryRouter = require('./routes/categoriesRoute')
+const cors =  require('cors')
 dotenv.config()
 
 
@@ -21,6 +22,7 @@ mongoose.connect(process.env.MONGO_URI,{
 
 
 // ==============Middlewares=============
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
