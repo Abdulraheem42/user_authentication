@@ -19,8 +19,10 @@ const userControllers = {
     userExistingByEmail: async (email) => {
         try{
             let user = await UserModel.findOne({email: email})
+            console.log(user, 'user exist')
             return user
         }catch(error){
+            console.log(error, 'error user exist')
             return error
         }
     },
