@@ -20,6 +20,7 @@ router.post('/signup', async (req, res) => {
 
     //  ==========Check user in db by email============
     let user = await userControllers.userExistingByEmail(req.body.email)
+    console.log("user============", user)
     if(user){
       return res.status(400).json({
         status: 400,
