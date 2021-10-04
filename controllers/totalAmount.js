@@ -2,6 +2,17 @@ const {totalAmountModel} = require('../model/totalAmount')
 const { UserModel } = require('../model/user')
 
 const amountControllers = {
+    // =====================check user amount===========
+    checkUserAmount: async (id) => {
+        try{
+            let amount = await totalAmountModel.find({userId: id})
+            console.log(amount, 'amount===')
+            return amount
+        }catch(error){
+            return error
+        }
+    },
+
     // =====================update total amount=============
     totalAmountUpdate: async (id, updateData) => {
         try{
@@ -31,10 +42,10 @@ const amountControllers = {
 //    ===============checking valid user Id============
     getTotalAmount: async (id) => {
         try{
-        
-            let amount = await totalAmountModel.findById(id).populate('userId');
+            let amount = await totalAmountModel.find({userId: id}).populate('userId');
             return amount
         }catch(error){
+            console.log(error, 'errro')
             return error
         }
     }

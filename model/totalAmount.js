@@ -33,6 +33,7 @@ validateTotalAmount = (data) => {
 validateTotalAmountUpdate = (data) => {
     const schema = Joi.object({
         totalAmount: Joi.number().required(),
+        userId: Joi.string().required(),
         _id: Joi.string().required()
     })
     return schema.validate(data)
