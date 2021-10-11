@@ -84,6 +84,7 @@ router.post("/signin", async (req, res) => {
     existUser.jwtToken = tokenDetail
     await userControllers.updateUserToken(existUser);
     res.cookie('jwtToken', jwtToken, {httpOnly: true})
+    console.log(req.cookies, 'cookies')
     res.status(200).json({
       status: 200,
       data: existUser,
@@ -97,6 +98,22 @@ router.post("/signin", async (req, res) => {
     })
   }
 })
+
+// =======================Log out=================
+router.get("/logout", verifyToken, async (req, res) => {
+  // clear the cookie
+  try{
+    res.clearCookie("jwtToken");
+    // redirect to SignIn
+    return res.redirect("/SignIn");
+  }catch(error){
+    return res.status(400).json({
+      status: 400,
+      data: null,
+      error: error
+    })
+  }
+});
 
 // ===================UPdate user profile===================
 router.put("/updateProfile", verifyToken, async (req, res) => {

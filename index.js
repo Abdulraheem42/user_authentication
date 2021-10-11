@@ -6,6 +6,8 @@ const userRouter = require('./routes/userRoute')
 const amountRouter = require('./routes/amountRoute')
 const categoryRouter = require('./routes/categoriesRoute')
 const cors =  require('cors')
+const cookieParser = require('cookie-parser')
+
 dotenv.config()
 
 
@@ -25,6 +27,8 @@ mongoose.connect(process.env.MONGO_URI,{
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+// let’s you use the cookieParser in your application
+app.use(cookieParser());
 
 app.use('/api/user', userRouter)
 app.use('/api/amount', amountRouter)
