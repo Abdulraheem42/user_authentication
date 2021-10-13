@@ -41,10 +41,7 @@ const userControllers = {
         try {
             const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
             const encrypted = Buffer.concat([cipher.update(password), cipher.final()]);
-            return {
-                iv: iv.toString('hex'),
-                content: encrypted.toString('hex')
-            };
+            return encrypted.toString('hex')
           } catch (error) {
             return error;
           }
@@ -53,8 +50,9 @@ const userControllers = {
     // =============password decryption============
     passwordDecryption: (hash) => {
         try {
-            const decipher = crypto.createDecipheriv(algorithm, secretKey, Buffer.from(hash.iv, 'hex'));
-            const decrpyted = Buffer.concat([decipher.update(Buffer.from(hash.content, 'hex')), decipher.final()]);
+            const decipher = crypto.createDecipheriv(algorithm, secretKey, Buffer.from(iv, 'hex'));
+            const decrpyted = Buffer.concat([decipher.update(Buffer.from(hash, 'hex')), decipher.final()]);
+            console.log('decryption', decrpyted.toString('hex'))
             return decrpyted.toString();
           } catch (error) {
             return error;

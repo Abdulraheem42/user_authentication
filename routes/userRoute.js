@@ -81,10 +81,14 @@ router.post("/signin", async (req, res) => {
       jwtToken: jwtToken,
       createdAt: Date.now()
     }
+    let loggedDevice = {
+      jwtToken: tokenDetail,
+      deviceId: req.body.deviceId
+    }
     existUser.jwtToken = tokenDetail
+    existUser.loggedDevices.push(loggedDevice)
     await userControllers.updateUserToken(existUser);
     res.cookie('jwtToken', jwtToken, {httpOnly: true})
-    console.log(req.cookies, 'cookies')
     res.status(200).json({
       status: 200,
       data: existUser,
@@ -103,9 +107,17 @@ router.post("/signin", async (req, res) => {
 router.get("/logout", verifyToken, async (req, res) => {
   // clear the cookie
   try{
-    res.clearCookie("jwtToken");
-    // redirect to SignIn
-    return res.redirect("/SignIn");
+    let user = await userControllers.getUserById(req.body._id)
+    // Remove deviceId
+    let deleteIndex = user.loggedDevices.findIndex(item => item.deviceId == req.body.deviceId)
+    user.loggedDevices.splice(deleteIndex, 1)
+    // Update database
+    await userControllers.updateUserProfile(req.body._id, user)
+    res.status(200).json({
+      status: 200,
+      error: null,
+      data: "Logout successfully"
+    })
   }catch(error){
     return res.status(400).json({
       status: 400,

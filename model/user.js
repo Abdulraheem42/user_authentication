@@ -7,30 +7,33 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 3,
         maxlength: 30,
+        default: ""
       },
       lastName: {
         type: String,
         required: true,
         minlength: 3,
         maxlength: 30,
+        default: ""
       },
     email: {
         type: String,
-        required: true
+        required: true,
+        default: ""
     },
     password: {
         type: Object,
         required: true
     },
     jwtToken: {
-        jwtToken: {type: String},
+        jwtToken: {type: String, default: ""},
         createdAt: {type: Date}
     },
     loggedDevices: [
         {   
-            deviceId: {type: String, required: true},
+            deviceId: {type: String, required: true,default: ""},
             jwtToken: {
-                jwtToken: {type: String},
+                jwtToken: {type: String, default: ""},
                 createdAt: {type: Date}
             }
         }
@@ -40,13 +43,13 @@ const userSchema = new mongoose.Schema({
         default: 0,
     },
     forgetPasswordToken: {
-        type: String,
+        type: String, default: "",
     },
     forgetPasswordTime: {
         type: Number,
     },
     userId: {
-        type: String
+        type: String, default: ""
     }
 })
 
@@ -66,7 +69,8 @@ validateSignup = (user) => {
 validateSignin = (user) => {
     const schema = Joi.object({
         email: Joi.string().required(),
-        password: Joi.string().required().min(8).max(20)
+        password: Joi.string().required().min(8).max(20),
+        deviceId: Joi.string().required()
     })
     return schema.validate(user)
 }
