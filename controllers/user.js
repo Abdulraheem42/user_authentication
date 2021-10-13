@@ -2,9 +2,7 @@ const {UserModel} = require('../model/user')
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 const crypto = require('crypto')
-const algorithm = 'aes-256-ctr';
-const secretKey = 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3';
-const iv = crypto.randomBytes(16);
+
 
 
 
@@ -37,23 +35,20 @@ const userControllers = {
         }
     },
     // =============password encryption============
-    passwordEncryption: (password) => {
+    passwordEncryption: async (password) => {
         try {
-            const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
-            const encrypted = Buffer.concat([cipher.update(password), cipher.final()]);
-            return encrypted.toString('hex')
+           let encryption = await bcrypt.hash(password, saltRounds)
+           return encryption
           } catch (error) {
             return error;
           }
     },
 
     // =============password decryption============
-    passwordDecryption: (hash) => {
+    passwordDecryption: async (hash, password) => {
         try {
-            const decipher = crypto.createDecipheriv(algorithm, secretKey, Buffer.from(iv, 'hex'));
-            const decrpyted = Buffer.concat([decipher.update(Buffer.from(hash, 'hex')), decipher.final()]);
-            console.log('decryption', decrpyted.toString('hex'))
-            return decrpyted.toString();
+            let decryption = await bcrypt.compare(password, hash)
+            return decryption
           } catch (error) {
             return error;
           }

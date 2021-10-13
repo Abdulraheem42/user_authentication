@@ -30,7 +30,7 @@ router.post('/signup', async (req, res) => {
     }
     
     let userObject = {...req.body}
-    userObject.password = userControllers.passwordEncryption(req.body.password) //Password encryption
+    userObject.password = await userControllers.passwordEncryption(req.body.password) //Password encryption
     // ===============Add user in database================    
     await userControllers.createUser(userObject)
     return res.status(200).json({
@@ -68,8 +68,8 @@ router.post("/signin", async (req, res) => {
         error: "Email or password incorrect"
       })
     }
-    let encryptionPassword = userControllers.passwordDecryption(existUser.password);
-    if(req.body.password != encryptionPassword){
+    let encryptionPassword = await userControllers.passwordDecryption(existUser.password, req.body.password);
+    if(!encryptionPassword){
       return res.status(400).json({
         status: 400,
         data: '',
@@ -88,8 +88,10 @@ router.post("/signin", async (req, res) => {
     existUser.jwtToken = tokenDetail
     existUser.loggedDevices.push(loggedDevice)
     await userControllers.updateUserToken(existUser);
+    delete existUser.firstName
     res.cookie('jwtToken', jwtToken, {httpOnly: true})
-    res.status(200).json({
+    console.log(existUser, 'user---------------------------')
+   return res.status(200).json({
       status: 200,
       data: existUser,
       error: null

@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
         default: ""
     },
     password: {
-        type: Object,
+        type: String,
         required: true
     },
     jwtToken: {
