@@ -106,7 +106,7 @@ router.post("/signin", async (req, res) => {
 })
 
 // =======================Log out=================
-router.get("/logout", verifyToken, async (req, res) => {
+router.post("/logout", verifyToken, async (req, res) => {
   // clear the cookie
   try{
     let user = await userControllers.getUserById(req.body._id)
