@@ -50,17 +50,16 @@ router.put("/totalAmountUpdate", verifyToken, async (req, res) => {
 })
 
 // =================get Total Amount================
-router.get("/getTotalAmount", verifyToken, async (req, res) => {
+router.get("/getTotalAmount/:userId", verifyToken, async (req, res) => {
     try {   
-        if(!req.body.userId){
+        if(!req.params.userId){
             res.status(400).json({
                 status: 400,
                 error: "userId not valid",
                 data: null
             })
         }
-        let getTotalAmount = await amountControllers.getTotalAmount(req.body.userId)
-        console.log(getTotalAmount.length)
+        let getTotalAmount = await amountControllers.getTotalAmount(req.params.userId)
         if(getTotalAmount.length < 1){
             res.status(400).json({
                 status: 400,
