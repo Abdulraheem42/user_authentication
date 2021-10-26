@@ -60,17 +60,18 @@ router.get("/getTotalAmount", verifyToken, async (req, res) => {
             })
         }
         let getTotalAmount = await amountControllers.getTotalAmount(req.body.userId)
+        console.log(getTotalAmount.length)
+        if(getTotalAmount.length < 1){
+            res.status(400).json({
+                status: 400,
+                error: "No exist amount of this user",
+                data: null
+            })
+        }
         let resData = {
             _id: getTotalAmount[0]._id,
             totalAmount: getTotalAmount[0].totalAmount,
             createdAt: getTotalAmount[0].createdAt
-        }
-        if(!getTotalAmount){
-            res.status(400).json({
-                status: 400,
-                error: "userId not valid",
-                data: null
-            })
         }
             res.status(200).json({
                 status: 200,
