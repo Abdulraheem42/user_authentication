@@ -15,14 +15,8 @@ router.post("/addCategory", verifyToken, async (req, res) => {
                 data: null
             })
         }
-        // let category = {
-        //     categoryAmount: req.body.categoryAmount,
-        //     categoryName: req.body.categoryName,
-        //     categoryItem: req.body.categoryItem,
-        // }
 
         let categoryres= await categoryControllers.addCategory(req.body)
-        console.log(categoryres, 'category===')
         return res.status(200).json({
             status: 200,
             error: null,
@@ -34,11 +28,14 @@ router.post("/addCategory", verifyToken, async (req, res) => {
 })
 
 // =======================Get all categories===================
-router.get("/getAllCategory", verifyToken, async(req, res) => {
+router.get("/getAllCategory/:userId", verifyToken, async(req, res) => {
     try{
-        console.log(req.body)
-        let category = await categoryControllers.getAllCatedgories(req.body.userId)   
-        console.log(category, 'category===')    
+        let category = await categoryControllers.getAllCatedgories(req.params.userId)   
+        res.status(200).json({
+            state: 200,
+            error: null,
+            data: category
+        })
     }catch(error){
         return error
     }
