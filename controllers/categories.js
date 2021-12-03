@@ -34,6 +34,8 @@ const categoryControllers = {
                 {$set: updateData},
                 {new: true}
             )
+            updatedCategory.updatedAt = new Date()
+            console.log('updated category', updatedCategory)
             return updatedCategory
         }catch(error){
             return error

@@ -23,7 +23,8 @@ const categoriesSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
          ref: "user"
-    }
+    },
+
 })
 
 const categoriesModel = mongoose.model("categories", categoriesSchema)

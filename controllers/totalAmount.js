@@ -45,7 +45,6 @@ const amountControllers = {
             let amount = await totalAmountModel.find({userId: id}).populate('userId');
             return amount
         }catch(error){
-            console.log(error, 'errro')
             return error
         }
     }
