@@ -24,6 +24,30 @@ const categoryControllers = {
         }catch(error){
             return error
         }
+    },
+
+    //    ======================update category=============
+    updateCategory: async (id, updateData) => {
+        try{
+            let updatedCategory = await categoriesModel.findOneAndUpdate(
+                {_id: id},
+                {$set: updateData},
+                {new: true}
+            )
+            return updatedCategory
+        }catch(error){
+            return error
+        }
+    },
+
+     //    ======================Delete category=============
+     deleteCategory: async (id) => {
+        try{
+            let deletedCategory = await categoriesModel.findOneAndRemove({_id: id})
+            return deletedCategory
+        }catch(error){
+            return error
+        }
     }
 }
 

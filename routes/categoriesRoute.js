@@ -40,10 +40,30 @@ router.get("/getAllCategory/:userId", verifyToken, async(req, res) => {
         return error
     }
 })
-// ===============update category==============
-router.put("/categoryUpdate", verifyToken, async (req, res) => {
+
+// ===============Update category==============
+router.put("/updateCategory", verifyToken, async (req, res) => {
     try{
-        
+        let updatedCategory = await categoryControllers.updateCategory(req.body._id, req.body)
+        res.status(200).json({
+            status: 200,
+            error: null,
+            data: updatedCategory
+        })
+    }catch(error){
+        return error
+    }
+})
+
+// ===============Delete category==============
+router.get("/deleteCategory/:id", verifyToken, async (req, res) => {
+    try{
+        let deletedCategory = await categoryControllers.deleteCategory(req.params.id)
+        res.status(200).json({
+            status: 200,
+            error: null,
+            data: {message: "Remove successfully"}
+        })
     }catch(error){
         return error
     }
