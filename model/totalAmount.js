@@ -9,6 +9,10 @@ const totalAmountSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
+    updatedAt: {
+        type: Date,
+        default: Date.now
+    },
     description: {
         type: String,
         minLength: 20,

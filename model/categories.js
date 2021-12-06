@@ -24,6 +24,14 @@ const categoriesSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
          ref: "user"
     },
+    createdAt: {
+        type: Date,
+        required: true
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
+    },
 
 })
 

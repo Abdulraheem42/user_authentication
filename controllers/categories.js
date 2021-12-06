@@ -8,7 +8,8 @@ const categoryControllers = {
     addCategory: async (data) => {
        try{
             let category = await new categoriesModel(data)
-            // category.createdAt = new Date()
+            category.updatedAt = undefined
+            category.createdAt = new Date()
             category.save()
             return category
        }catch(error){
@@ -16,7 +17,7 @@ const categoryControllers = {
        }
    },
 
-//    ======================get all category=============
+    //    ======================get all category=============
     getAllCatedgories: async (id) => {
         try{
             let getCategory = await categoriesModel.find({userId: id})
@@ -34,8 +35,6 @@ const categoryControllers = {
                 {$set: updateData},
                 {new: true}
             )
-            updatedCategory.updatedAt = new Date()
-            console.log('updated category', updatedCategory)
             return updatedCategory
         }catch(error){
             return error

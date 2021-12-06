@@ -6,7 +6,6 @@ const amountControllers = {
     checkUserAmount: async (id) => {
         try{
             let amount = await totalAmountModel.find({userId: id})
-            console.log(amount, 'amount===')
             return amount
         }catch(error){
             return error

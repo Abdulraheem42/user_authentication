@@ -3,6 +3,7 @@ const router = express.Router()
 const {validateAddCategory} = require('../model/categories')
 const verifyToken = require("../utils/verifyToken")
 const categoryControllers = require("../controllers/categories")
+const { deleteCategory } = require("../controllers/categories")
 
 // ===================Add category ================
 router.post("/addCategory", verifyToken, async (req, res) => {
@@ -45,6 +46,7 @@ router.get("/getAllCategory/:userId", verifyToken, async(req, res) => {
 router.put("/updateCategory", verifyToken, async (req, res) => {
     try{
         let updatedCategory = await categoryControllers.updateCategory(req.body._id, req.body)
+        updatedCategory.createdAt = undefined
         res.status(200).json({
             status: 200,
             error: null,
@@ -62,7 +64,8 @@ router.get("/deleteCategory/:id", verifyToken, async (req, res) => {
         res.status(200).json({
             status: 200,
             error: null,
-            data: {message: "Remove successfully"}
+            message: "Remove successfully",
+            data: deletedCategory
         })
     }catch(error){
         return error

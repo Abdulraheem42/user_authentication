@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const {validateTotalAmount, validateTotalAmountUpdate} = require('../model/totalAmount')
+const {validateTotalAmount, validateTotalAmountUpdate, totalAmountModel} = require('../model/totalAmount')
 const verifyToken = require('../utils/verifyToken')
 const amountControllers = require('../controllers/totalAmount')
 const userControllers = require('../controllers/user')
+const { totalAmountUpdate } = require('../controllers/totalAmount')
 
 // ================Add total amount ===================
 router.post("/totalAmount", verifyToken, async (req, res) => {
@@ -39,6 +40,7 @@ router.put("/totalAmountUpdate", verifyToken, async (req, res) => {
             })
         }
             let totalAmountUpdate = await amountControllers.totalAmountUpdate(req.body._id, req.body)
+            totalAmountUpdate.createdAt = undefined
             return res.status(200).json({
                 status: 200,
                 error: null,
